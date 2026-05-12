@@ -1,0 +1,82 @@
+# .gitignore - raíz para múltiples proyectos C#/Blazor
+# Incluye reglas para Visual Studio, Rider, dotnet CLI y artefactos de Blazor
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+out/
+artifacts/
+
+# Publish outputs (evitar incluir archivos publicados)
+**/publish/
+**/bin/**/publish/
+**/obj/**/publish/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# Resharper
+_ReSharper*/
+*._ReSharper*/
+*.DotSettings.user
+
+# User-specific / temporary
+*.log
+*.vspscc
+*.vssscc
+*.tmp
+*.temp
+Thumbs.db
+.DS_Store
+
+# Dotnet user secrets and local settings
+secrets.json
+appsettings.Development.json
+
+# Blazor / WebAssembly published artifacts (generados)
+# (No ignorar wwwroot en general, solo los artefactos generados al publicar)
+wwwroot/_framework/
+wwwroot/_bin/
+wwwroot/_content/
+wwwroot/blazor.boot.json
+wwwroot/*.br
+wwwroot/*.gz
+
+# Static web build folders (if using SPA toolchains alongside Blazor)
+node_modules/
+wwwroot/dist/
+wwwroot/build/
+
+# Logs and coverage
+*.log
+coverage/
+coverage.*
+
+# Package managers
+packages/
+**/packages/
+
+# Optional: editor / OS files
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# End of .gitignore
