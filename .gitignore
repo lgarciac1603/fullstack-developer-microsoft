@@ -53,17 +53,21 @@ appsettings.Development.json
 
 # Blazor / WebAssembly published artifacts (generados)
 # (No ignorar wwwroot en general, solo los artefactos generados al publicar)
-wwwroot/_framework/
-wwwroot/_bin/
-wwwroot/_content/
-wwwroot/blazor.boot.json
-wwwroot/*.br
-wwwroot/*.gz
+**/wwwroot/_framework/
+**/wwwroot/_framework/**
+**/wwwroot/_bin/
+**/wwwroot/_bin/**
+**/wwwroot/_content/
+**/wwwroot/_content/**
+**/wwwroot/blazor.boot.json
+**/wwwroot/**/*.br
+**/wwwroot/**/*.gz
 
 # Static web build folders (if using SPA toolchains alongside Blazor)
 node_modules/
 wwwroot/dist/
 wwwroot/build/
+wwwroot/_static/
 
 # Logs and coverage
 *.log
