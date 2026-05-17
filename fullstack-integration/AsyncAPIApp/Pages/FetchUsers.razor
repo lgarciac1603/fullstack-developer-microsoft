@@ -1,0 +1,59 @@
+﻿@page "/fetchusers"
+@inject HttpClient Http
+
+<h3>Users</h3>
+
+<button @onclick="FetchUsersData">Fetch new Users</button>
+
+@if (isLoading)
+{
+    <div class="spinner"><p>Loading...</p></div>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="error">@errorMessage</p>
+}
+else if (users != null)
+{
+    <ul>
+        @foreach (var user in users)
+        {
+            <li>@user.Name (@user.Email)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No data available</p>
+}
+
+@code {
+    private List<User>? users;
+    private bool isLoading = false;
+    private string? errorMessage = null;
+
+    private async Task FetchUsersData() {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            users = await Http.GetFromJsonAsync<List<User>>("https://jsonplaceholder.typicode.com/users");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error fetching users: {ex.Message}";
+        }
+        finally 
+        {
+            isLoading = false;
+        };
+    }
+
+    public class User
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+    };
+}
