@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+// Registrar servicios usados por los componentes
+builder.Services.AddSingleton<ErrorLoginService>();
+builder.Services.AddHttpClient<TokenService>();
 
 var app = builder.Build();
 

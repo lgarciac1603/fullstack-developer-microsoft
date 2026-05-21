@@ -1,0 +1,46 @@
+﻿@page "/fetchdata";
+
+@using System.Net.Http.Headers;
+
+@inject TokenService TokenService;
+@inject ErrorLoginService ErrorLoginService;
+
+<h3>FetchData</h3>
+<p>Token: @tokenString</p>
+<pre style="width=200px">@apiMessage</pre>
+
+@code {
+    private string apiResponse = string.Empty;
+    private string? apiMessage = string.Empty;
+    private string? tokenString = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var token = await TokenService.GetTokenAsync();
+            Console.Write("Token is: " + token);
+            tokenString = token;
+
+            var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            apiResponse = await client.GetStringAsync("https://jsonplaceholder.typicode.com/posts/1");
+            //apiResponse = await client.GetStringAsync("https://jsonplaceholder.typicode.com/invalid-endpoint");
+            Console.WriteLine(apiResponse);
+
+            var jsonElement = System.Text.Json.JsonSerializer
+                .Deserialize<System.Text.Json.JsonElement>(apiResponse);
+
+            apiMessage = System.Text.Json.JsonSerializer
+                .Serialize(jsonElement, new System.Text.Json.JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    });
+        }
+        catch (Exception ex)
+        {
+            ErrorLoginService.LogError(ex.Message);
+        }
+    }
+}
