@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+
+@inject NavigationManager Navigation
+
+@code {
+    private HubConnection hubConnection;
+    private string UserName;
+    private string Message;
+    private List<string> Messages = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/chathub")).Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            Messages.Add($"{user}: {message}");
+            StateHasChanged();
+        });
+
+        hubConnection.Closed += async (error) =>
+        {
+            await Task.Delay(5000);
+            await hubConnection.StartAsync();
+        };
+
+        await hubConnection.StartAsync();
+    }
+}
