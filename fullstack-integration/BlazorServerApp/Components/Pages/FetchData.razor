@@ -1,0 +1,19 @@
+﻿@page "/fetch"
+@inject CacheService CacheService
+
+<h3>Weather Data</h3>
+
+<p>@WeatherData</p>
+
+@code {
+    private string WeatherData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        WeatherData = CacheService.GetOrCreate("weatherData", entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+            return "Sample weather data"; // Replace with real fetch logic
+        });
+    }
+}
