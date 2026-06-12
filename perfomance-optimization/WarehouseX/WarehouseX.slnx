@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="WarehouseX.API/WarehouseX.API.csproj" />
+  <Project Path="WarehouseX.Core/WarehouseX.Core.csproj" />
+  <Project Path="WarehouseX.Data/WarehouseX.Data.csproj" />
+</Solution>
